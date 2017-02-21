@@ -78,3 +78,9 @@ Method not found: BowlingGame::roll
 ```
 
 Still red! Looks like there’s more for us to do here.
+
+Add the `BowlingGame::roll(int)` method (empty), and run it again.
+
+```
+Method not found: BowlingGame::score
+```
