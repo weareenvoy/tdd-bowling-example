@@ -68,4 +68,13 @@ In non-code terms, we create a game, roll 20 gutters (2 throws over 10 frames), 
 Error: Class 'BowlingGame' not found
 ```
 
-Our one test is Red, so we’re starting off the Red-Green-Refactor process at the right spot.
+Our one test is Red, so we’re starting off the Red-Green-Refactor process at the right spot. Create the `BowlingGame` class and run the test again.
+
+> Remember: only write the minimum code necessary to achieve your test’s goals! The idea is to write only the code necessary to pass the tests.
+> Once the test passes, it can be refactored, which is coming up!
+
+```
+Method not found: BowlingGame::roll
+```
+
+Still red! Looks like there’s more for us to do here.
