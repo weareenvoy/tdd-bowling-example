@@ -84,3 +84,12 @@ Add the `BowlingGame::roll(int)` method (empty), and run it again.
 ```
 Method not found: BowlingGame::score
 ```
+
+Still red, add the `BowlingGame::score()` method (empty), and run it again.
+
+At this point our one test is coming up green. Great!
+
+> Note: Ok, so you may have noticed the weirdness here with the fact that both `BowlingGame::roll` and `BowlingGame::score` are empty.
+> `\PHPUnit\Framework\TestCase::assertEquals` does not do a type check, and so `null` is coerced into `0`. Don’t like that?
+> You might like `\PHPUnit\Framework\TestCase::assertSame` instead, as it does a type check as well as a value check.
+> For the purposes of this kata, it won’t cause enough of an issue to make a difference, as we’ll show with the next tests.
