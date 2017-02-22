@@ -183,3 +183,45 @@ Challenge yourself to see if you can make the same thing happen for the looped r
 > rather than in the implementation class. This is just fine. If no refactoring needs to happen
 > in the implementation class (yet), then there’s no reason to force any refactoring. That will
 > surely happen later on in the process.
+
+#### Test #3 -- Scoring a Spare
+
+Follow along with the code completely by following the commits in `test/3-scores-a-spare`.
+
+Until this point the majority of what we’ve done is to cover the more simplistic rules that govern the majority of cases. As long as the player never gets a spare or a strike, we’ll be able to score a game perfectly.
+
+Let’s quickly review how a spare is scored, and once we’re comfortable with the rule, we write up our test.
+
+A spare is
+* both rolls in a frame added together equals 10 (all pins in a frame)
+* the first roll in the frame is not 10 itself (a strike)
+
+So, a spare could be `1,9`, `8,2`, even `0,10`, etc., but not `10,0`. Let’s write up a test and see how it works.
+
+```php
+<?php
+
+class BowlingGameTest extends \PHPUnit\Framework\TestCase
+{
+    /**
+     * @test
+     */
+    public function scores_a_spare()
+    {
+        $game = $this->createGame();
+        
+        $game->roll(6);
+        $game->roll(4);
+        $game->roll(4);
+        $this->rollMany($game, 17, 0);
+        
+        self::assertEquals(18, $game->score());
+    }
+}
+```
+
+Great. Now it rolls a spare for the first frame, one extra pin (as this is needed to score the rolls, per the rules), and finishes up with all gutters. Run the test, and see what happens!
+
+```
+Failed asserting `14` equals expected `18`.
+```
