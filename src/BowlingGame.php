@@ -11,6 +11,16 @@ class BowlingGame
 
     public function score(): int
     {
-        return array_sum($this->rolls);
+        $score = 0;
+
+        for ($frameIndex = 0, $i = 0; $frameIndex < 10; $frameIndex++, $i += 2) {
+            if (10 === $this->rolls[$i] + $this->rolls[$i + 1]) {
+                $score += 10 + $this->rolls[$i + 2];
+            } else {
+                $score += $this->rolls[$i] + $this->rolls[$i + 1];
+            }
+        }
+
+        return $score;
     }
 }

@@ -241,3 +241,17 @@ First, create the field and make sure your tests pass. Then, update the `roll` f
 Make sure to add back the `@test` annotation!
 
 As expected, the first two tests pass, and the new one fails.
+
+Great, now let’s rework `BowlingGame::score()` to calculate out the game on the fly.
+
+The basic logic here is as follows:
+
+    foreach frame
+        if the sum of both rolls equals 10
+            increment $score by 10 + the next roll
+        else
+            increment $score by both rolls
+
+In trying to implement this logic, we’ll quickly come to realize that we need two index variables, one for the current frame and one for the current roll. Once it’s implemented, run the tests!
+
+We’ve got a passing test suite!
