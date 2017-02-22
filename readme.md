@@ -269,3 +269,45 @@ Another thing we can do within our refactoring step here is to make the code mor
 One last refactor for readability will be to pull out the scoring of a frame with a spare. The only goal for this is to make it easier to read the `BowlingGame::score()` function, as it’s much easier to skim through. The details of how a spare frame is scored do not need to muddy the waters.
 
 If everything went well, all of the tests still pass.
+
+#### Test 4 -- Scoring a Strike
+
+Follow along with the code completely by following the commits in `test/4-scores-a-strike`.
+
+We’ve made it to the last scoring rule! Let’s review how a strike is scored.
+
+A strike is:
+* the first (and consequently only) roll in the frame equals 10
+* the frame ends and no more rolls are needed
+
+This adds an interesting concept to the game. A frame can be 1 or 2 rolls, depending on whether or not the first roll is a strike. Regardless of how that would be implemented, let’s go write our fourth test.
+
+```php
+<?php
+
+class BowlingGameTest extends \PHPUnit\Framework\TestCase
+{
+    /**
+     * @test
+     */
+    public function scores_a_strike()
+    {
+        $game = $this->createGame();
+        
+        $game->roll(10);
+        $game->roll(6);
+        $game->roll(2);
+        $this->rollMany($game, 16, 0);
+        
+        self::assertEquals(26, $game->score());
+    }
+}
+```
+
+Running this test results in the following:
+
+```
+Undefined offset: 19
+```
+
+Huh, that’s definitely a weird one. I was expecting to see something like “Failed asserting `18` equals expected `26`”...

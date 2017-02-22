@@ -45,6 +45,21 @@ class BowlingGameTest extends TestCase
     }
 
     /**
+     * @test
+     */
+    public function scores_a_strike()
+    {
+        $game = $this->createGame();
+
+        $game->roll(10);
+        $game->roll(6);
+        $game->roll(2);
+        $this->rollMany($game, 16, 0);
+
+        self::assertEquals(26, $game->score());
+    }
+
+    /**
      * @return BowlingGame
      */
     private function createGame(): BowlingGame
