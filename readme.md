@@ -142,4 +142,8 @@ It passes! Fantastic. If we run our full test suite, we get the following:
 Failed asserting `1` equals expected `0`.
 ```
 
-Hmm... what went wrong here?
+Hmm... what went wrong here? Turns out the problem here is that our code in `BowlingGame::score()` was a bit **too** simple to be true. Rats. Fine, what are our other options to make this work while not breaking the previous test?
+
+What if we create an instance variable on the class? Let’s add a private instance variable `$score` to `BowlingGame`, add all of the pins to `$score` when `BowlingGame::roll()` is called, and return `$score` from `BowlingGame::score()`.
+
+It’s passing now!

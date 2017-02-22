@@ -2,12 +2,15 @@
 
 class BowlingGame
 {
+    private $score = 0;
+
     public function roll(int $pins)
     {
+        $this->score += $pins;
     }
 
-    public function score()
+    public function score(): int
     {
-        return 1;
+        return $this->score;
     }
 }
