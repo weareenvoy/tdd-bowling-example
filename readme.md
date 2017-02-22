@@ -311,3 +311,13 @@ Undefined offset: 19
 ```
 
 Huh, that’s definitely a weird one. I was expecting to see something like “Failed asserting `18` equals expected `26`”...
+
+Turns out that we’re getting this weird error for the same reason we would be getting the expected failure. Because we have yet to implement the strike scoring, we’re jumping to an unused index. Based on the way the game works, there are less rolls in a game with strikes than a game without strikes.
+
+> Yeah, there’s totally an edge case where a game can have the first strike in the 10th frame,
+> which would actually mean there’s a 21st roll. Since we’re only scoring a game, not worrying
+> about how many rolls have actually happened, this is outside of the scope of the kata.
+
+Based on the previous test, we know that we need to add a case for handling a strike. Let’s change the if statement to start with a strike, then go to a spare, then a “normal” frame.
+
+Now, if you run the test suite, you may find that it still fails. Turns out that a frame that has a strike only has one roll in it, not two! Update the `BowlingGame::score()` loop to handle that case, and your tests should pass as expected.
