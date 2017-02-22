@@ -147,3 +147,39 @@ Hmm... what went wrong here? Turns out the problem here is that our code in `Bow
 What if we create an instance variable on the class? Let’s add a private instance variable `$score` to `BowlingGame`, add all of the pins to `$score` when `BowlingGame::roll()` is called, and return `$score` from `BowlingGame::score()`.
 
 It’s passing now!
+
+#### Interlude #1 -- Refactoring!
+
+Follow along with the code completely by following the commits in `refactor/part-1`.
+
+Since we’ve gone through 2 tests, we can visit the **Refactor** step of Red-Green-Refactor and determine what, if anything, we want to do.
+
+There are a few things we can look at to want to refactor, including but not limited to:
+
+* duplicated code
+* complex code
+* hard-to-read code
+
+The goal in the **Refactor** step of Red-Green-Refactor is to make your code easier to understand and have a better architecture. Let’s jump into the code and see what we can do.
+
+Well, there is some duplicate code within our tests that may be used in other tests. To promote reusability and extensibility, let’s abstract out the creation of `BowlingGame` to a private function on the test.
+
+Let’s also take those for loops and make them a private function on the test so we can have a more expressive (readable) test.
+
+How do we do that? We want to **always** stay in a Green state. Going into a Red state breaks the loop, as Red only happens after all of the tests are passing. Until you are 110%+ comfortable writing tests, do this step. Keep it green. If you don’t, it will turn into more work than you want it to be.
+
+We approach this in a seemingly backwards fashion. Let’s look at the duplicated creation of a game. First, let’s create a function `createGame` on the test class. Re-run the tests, and confirm everything is green. Update the function so that `createGame` returns a new `BowlingGame` instance. Re-run the tests again, and confirm they’re green. Finally, in one of the tests, replace `new BowlingGame` with `$this->createGame()`, and run them again. Once they come back as green, we can make this change in every other location where we want the code.
+
+Challenge yourself to see if you can make the same thing happen for the looped rolls that are happening (`rollMany` is a pretty good function name,  if you need it). Go through the same steps, confirming every time that every change you make does not make a test turn red.
+
+> Why do we put `rollMany` on the test class instead of in `BowlingGame` itself?
+> First, we don’t have a test for it. Second, within our business rules (score a bowling game)
+> there is no need for such a function. For the time being it works better as a test helper
+> function rather than a function on the instance itself. When you consider a real bowling game,
+> is there ever a moment when multiple rolls would be scored at the same time with the same
+> number of pins?
+
+> Something else to consider is that all of the refactoring being done here is in the test class
+> rather than in the implementation class. This is just fine. If no refactoring needs to happen
+> in the implementation class (yet), then there’s no reason to force any refactoring. That will
+> surely happen later on in the process.
