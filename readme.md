@@ -93,3 +93,43 @@ At this point our one test is coming up green. Great!
 > `\PHPUnit\Framework\TestCase::assertEquals` does not do a type check, and so `null` is coerced into `0`. Don’t like that?
 > You might like `\PHPUnit\Framework\TestCase::assertSame` instead, as it does a type check as well as a value check.
 > For the purposes of this kata, it won’t cause enough of an issue to make a difference, as we’ll show with the next tests.
+
+#### Test #2 -- Scoring One Pin
+
+Follow along with the code completely by following the commits in `test/2-scores-one-pin`.
+
+Alright, now we’re at the meat of the kata. Scoring one pin!
+
+```php
+<?php
+
+class BowlingGameTest extends \PHPUnit\Framework\TestCase
+{
+    /**
+     * @test
+     */
+    public function scores_one_pin()
+    {
+        // Arrange
+        $game = new BowlingGame;
+        
+        // Act
+        $game->roll(1);
+        for ($i = 0; $i < 19; $i++) {
+            $game->roll(0);
+        }
+        
+        self::assertEquals(1, $game->score());
+    }
+}
+```
+
+This is pretty similar to the first test. The only difference here is that we roll 1 pin for the first roll and follow it up with 19 gutters (to equal 20 rolls in the game).
+
+If we run the tests now, we get the following error:
+
+```
+Failed asserting null equals expected 1.
+```
+
+Time to look at `BowlingGame` and see what’s going on!
