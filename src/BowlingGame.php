@@ -8,5 +8,6 @@ class BowlingGame
 
     public function score()
     {
+        return 1;
     }
 }

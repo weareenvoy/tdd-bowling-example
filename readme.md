@@ -132,4 +132,14 @@ If we run the tests now, we get the following error:
 Failed asserting null equals expected 1.
 ```
 
-Time to look at `BowlingGame` and see what’s going on!
+Time to look at `BowlingGame` and see what’s going on! As you already know, both functions within `BowlingGame` are empty, so of course the test is failing. Let’s look at what we can do to make this test pass.
+
+The first thought is to simply add `return 1;` from `BowlingGame::score()`. It meets all of our requirements: simple and makes the test pass. Try it and let’s run `scores_one_pin()`.
+
+It passes! Fantastic. If we run our full test suite, we get the following:
+
+```
+Failed asserting `1` equals expected `0`.
+```
+
+Hmm... what went wrong here?
