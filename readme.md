@@ -255,3 +255,17 @@ The basic logic here is as follows:
 In trying to implement this logic, we’ll quickly come to realize that we need two index variables, one for the current frame and one for the current roll. Once it’s implemented, run the tests!
 
 We’ve got a passing test suite!
+
+#### Interlude #2 -- Refactoring!
+
+Follow along with the code completely by following the commits in `refactor/part-2`.
+
+Back to a refactoring section! Remembering what we learned previously about refactoring, let’s get to it!
+
+We’ve got some duplicated code around scoring a frame, in that it’s the same in the spare check expression as well as scoring a frame itself.
+
+Another thing we can do within our refactoring step here is to make the code more readable by extracting our spare check expression. We can pull out the expression within the `if` statement we put into `BowlingGame::score()` to make it easier to read. Put that expression into a `BowlingGame::isFrameSpare()` private method so we don’t have to concern ourselves with how a spare is determined.
+
+One last refactor for readability will be to pull out the scoring of a frame with a spare. The only goal for this is to make it easier to read the `BowlingGame::score()` function, as it’s much easier to skim through. The details of how a spare frame is scored do not need to muddy the waters.
+
+If everything went well, all of the tests still pass.
