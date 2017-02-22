@@ -93,3 +93,57 @@ At this point our one test is coming up green. Great!
 > `\PHPUnit\Framework\TestCase::assertEquals` does not do a type check, and so `null` is coerced into `0`. Don’t like that?
 > You might like `\PHPUnit\Framework\TestCase::assertSame` instead, as it does a type check as well as a value check.
 > For the purposes of this kata, it won’t cause enough of an issue to make a difference, as we’ll show with the next tests.
+
+#### Test #2 -- Scoring One Pin
+
+Follow along with the code completely by following the commits in `test/2-scores-one-pin`.
+
+Alright, now we’re at the meat of the kata. Scoring one pin!
+
+```php
+<?php
+
+class BowlingGameTest extends \PHPUnit\Framework\TestCase
+{
+    /**
+     * @test
+     */
+    public function scores_one_pin()
+    {
+        // Arrange
+        $game = new BowlingGame;
+        
+        // Act
+        $game->roll(1);
+        for ($i = 0; $i < 19; $i++) {
+            $game->roll(0);
+        }
+        
+        self::assertEquals(1, $game->score());
+    }
+}
+```
+
+This is pretty similar to the first test. The only difference here is that we roll 1 pin for the first roll and follow it up with 19 gutters (to equal 20 rolls in the game).
+
+If we run the tests now, we get the following error:
+
+```
+Failed asserting null equals expected 1.
+```
+
+Time to look at `BowlingGame` and see what’s going on! As you already know, both functions within `BowlingGame` are empty, so of course the test is failing. Let’s look at what we can do to make this test pass.
+
+The first thought is to simply add `return 1;` from `BowlingGame::score()`. It meets all of our requirements: simple and makes the test pass. Try it and let’s run `scores_one_pin()`.
+
+It passes! Fantastic. If we run our full test suite, we get the following:
+
+```
+Failed asserting `1` equals expected `0`.
+```
+
+Hmm... what went wrong here? Turns out the problem here is that our code in `BowlingGame::score()` was a bit **too** simple to be true. Rats. Fine, what are our other options to make this work while not breaking the previous test?
+
+What if we create an instance variable on the class? Let’s add a private instance variable `$score` to `BowlingGame`, add all of the pins to `$score` when `BowlingGame::roll()` is called, and return `$score` from `BowlingGame::score()`.
+
+It’s passing now!
