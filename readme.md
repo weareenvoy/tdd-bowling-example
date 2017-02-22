@@ -225,3 +225,19 @@ Great. Now it rolls a spare for the first frame, one extra pin (as this is neede
 ```
 Failed asserting `14` equals expected `18`.
 ```
+
+Ok, looks like what we currently have written isn’t covering how a spare is scored. Let’s visit the `BowlingGame::score()` function and see what we can do to resolve that.
+
+Right now `BowlingGame::score()` is simply returning a predefined value. What we really need to do is to determine the value of each frame with relation to the following frames to score spares correctly. As the code stands currently, we aren’t handling anything with consideration to frames. Uh-oh!
+
+At this point we need to refactor a bit. This is different from the Refactor step from Red-Green-Refactor because we are no longer in the **Green** state. What we want to do here is to remove this breaking test from the suite temporarily, so we’re back to **Green**, and then do a refactor, then bring the test back.
+
+In PHPUnit skipping a test is as simple as removing the `@test` annotation.
+
+Let’s first do a refactor to switch from having a `$score` field on `BowlingGame` and instead let’s store every roll that happens in a game. This wil let us reference the rolls when we calculate out the score. As a first guess, and also an easy way to keep our first two tests passing, let’s return the sum of every roll from `BowlingGame::score()`.
+
+First, create the field and make sure your tests pass. Then, update the `roll` function to also drop the value of `$pins` into our new `$rolls` array. Run the tests, and confirm everything is green. Then, in the `score` function, let’s start some real refactoring. Remember, all of these moves need to make sure the tests stay green!
+
+Make sure to add back the `@test` annotation!
+
+As expected, the first two tests pass, and the new one fails.
