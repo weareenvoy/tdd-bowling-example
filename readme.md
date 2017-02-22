@@ -183,3 +183,75 @@ Challenge yourself to see if you can make the same thing happen for the looped r
 > rather than in the implementation class. This is just fine. If no refactoring needs to happen
 > in the implementation class (yet), then there’s no reason to force any refactoring. That will
 > surely happen later on in the process.
+
+#### Test #3 -- Scoring a Spare
+
+Follow along with the code completely by following the commits in `test/3-scores-a-spare`.
+
+Until this point the majority of what we’ve done is to cover the more simplistic rules that govern the majority of cases. As long as the player never gets a spare or a strike, we’ll be able to score a game perfectly.
+
+Let’s quickly review how a spare is scored, and once we’re comfortable with the rule, we write up our test.
+
+A spare is
+* both rolls in a frame added together equals 10 (all pins in a frame)
+* the first roll in the frame is not 10 itself (a strike)
+
+So, a spare could be `1,9`, `8,2`, even `0,10`, etc., but not `10,0`. Let’s write up a test and see how it works.
+
+```php
+<?php
+
+class BowlingGameTest extends \PHPUnit\Framework\TestCase
+{
+    /**
+     * @test
+     */
+    public function scores_a_spare()
+    {
+        $game = $this->createGame();
+        
+        $game->roll(6);
+        $game->roll(4);
+        $game->roll(4);
+        $this->rollMany($game, 17, 0);
+        
+        self::assertEquals(18, $game->score());
+    }
+}
+```
+
+Great. Now it rolls a spare for the first frame, one extra pin (as this is needed to score the rolls, per the rules), and finishes up with all gutters. Run the test, and see what happens!
+
+```
+Failed asserting `14` equals expected `18`.
+```
+
+Ok, looks like what we currently have written isn’t covering how a spare is scored. Let’s visit the `BowlingGame::score()` function and see what we can do to resolve that.
+
+Right now `BowlingGame::score()` is simply returning a predefined value. What we really need to do is to determine the value of each frame with relation to the following frames to score spares correctly. As the code stands currently, we aren’t handling anything with consideration to frames. Uh-oh!
+
+At this point we need to refactor a bit. This is different from the Refactor step from Red-Green-Refactor because we are no longer in the **Green** state. What we want to do here is to remove this breaking test from the suite temporarily, so we’re back to **Green**, and then do a refactor, then bring the test back.
+
+In PHPUnit skipping a test is as simple as removing the `@test` annotation.
+
+Let’s first do a refactor to switch from having a `$score` field on `BowlingGame` and instead let’s store every roll that happens in a game. This wil let us reference the rolls when we calculate out the score. As a first guess, and also an easy way to keep our first two tests passing, let’s return the sum of every roll from `BowlingGame::score()`.
+
+First, create the field and make sure your tests pass. Then, update the `roll` function to also drop the value of `$pins` into our new `$rolls` array. Run the tests, and confirm everything is green. Then, in the `score` function, let’s start some real refactoring. Remember, all of these moves need to make sure the tests stay green!
+
+Make sure to add back the `@test` annotation!
+
+As expected, the first two tests pass, and the new one fails.
+
+Great, now let’s rework `BowlingGame::score()` to calculate out the game on the fly.
+
+The basic logic here is as follows:
+
+    foreach frame
+        if the sum of both rolls equals 10
+            increment $score by 10 + the next roll
+        else
+            increment $score by both rolls
+
+In trying to implement this logic, we’ll quickly come to realize that we need two index variables, one for the current frame and one for the current roll. Once it’s implemented, run the tests!
+
+We’ve got a passing test suite!

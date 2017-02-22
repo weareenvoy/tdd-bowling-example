@@ -30,6 +30,21 @@ class BowlingGameTest extends TestCase
     }
 
     /**
+     * @test
+     */
+    public function scores_a_spare()
+    {
+        $game = $this->createGame();
+
+        $game->roll(6);
+        $game->roll(4);
+        $game->roll(4);
+        $this->rollMany($game, 17, 0);
+
+        self::assertEquals(18, $game->score());
+    }
+
+    /**
      * @return BowlingGame
      */
     private function createGame(): BowlingGame
