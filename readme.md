@@ -327,3 +327,32 @@ Now, if you run the test suite, you may find that it still fails. Turns out that
 Follow along with the code completely by following the commits in `refactor/part-3`.
 
 At this point we’re sitting pretty with our tests, but there are still some refactoring that can be done. Let’s match our `isFrameSpare` function with a `isFrameStrike` function, and pull out the `scoreSpareFrame` function to match the `scoreFrame` function. Readability!
+
+#### Test #5 -- Scoring a Perfect Game
+
+Follow along with the code completely by following the commits in `test/5-scores-perfect-game`.
+
+This last test we’ll write is here mostly to cover an interesting test case, which is how a perfect game actually only has 12 rolls. (That pesky last frame has some weird stipulations.)
+
+```php
+<?php
+
+class BowlingGameTest extends \PHPUnit\Framework\TestCase
+{
+    /**
+     * @test
+     */
+    public function scores_a_perfect_game()
+    {
+        $game = $this->createGame();
+        
+        $this->rollMany($game, 12, 10);
+        
+        self::assertEquals(300, $game->score());
+    }
+}
+```
+
+If everything went as expected, this test passes out of the box, and proves that all of our rules work as expected. From here we can do more refactoring or leave the class and test as-is.
+
+Congratulations!
