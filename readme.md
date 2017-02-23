@@ -356,3 +356,17 @@ class BowlingGameTest extends \PHPUnit\Framework\TestCase
 If everything went as expected, this test passes out of the box, and proves that all of our rules work as expected. From here we can do more refactoring or leave the class and test as-is.
 
 Congratulations!
+
+### Addendum
+
+#### Naming Tests
+
+The convention followed in this kata/example is just one of many ways that tests can be named. If you prefer a setup that reads more like a full sentence than a fragment, that’s completely acceptable. The more important part is to match the conventions of your project. If you’re just starting out, do it however you want! Your testing framework will identify the different ways it can understand what is or isn’t a test, so go from there and do what you like.
+
+#### Committing to a Repo with Tests
+
+This repo is a ***bad*** example of how to commit with tests. The set up used here is to highlight every step of the process and is significantly more verbose than is necessary for a real project. A good idea would be to commit after each test is passing and after each refactoring is done. This way the repo history isn’t cluttered with unnecessary commits, and it’s easy to identify where a feature was added compared to where the code was refactored.
+
+#### What if I don't use PHP?
+
+The reasons we used PHP in this example are because setting up a test environment is extremely simple and because PHPUnit allows tests to be extremely flexible. All of the concepts roll over from test framework to test framework, so if you prefer a Mocha/Chai/Karma setup in JavaScript, you can do that easily.
