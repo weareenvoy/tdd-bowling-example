@@ -321,3 +321,9 @@ Turns out that we’re getting this weird error for the same reason we would be 
 Based on the previous test, we know that we need to add a case for handling a strike. Let’s change the if statement to start with a strike, then go to a spare, then a “normal” frame.
 
 Now, if you run the test suite, you may find that it still fails. Turns out that a frame that has a strike only has one roll in it, not two! Update the `BowlingGame::score()` loop to handle that case, and your tests should pass as expected.
+
+#### Interlude #3 -- Refactoring!
+
+Follow along with the code completely by following the commits in `refactor/part-3`.
+
+At this point we’re sitting pretty with our tests, but there are still some refactoring that can be done. Let’s match our `isFrameSpare` function with a `isFrameStrike` function, and pull out the `scoreSpareFrame` function to match the `scoreFrame` function. Readability!
