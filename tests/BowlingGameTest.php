@@ -60,6 +60,18 @@ class BowlingGameTest extends TestCase
     }
 
     /**
+     * @test
+     */
+    public function scores_a_perfect_game()
+    {
+        $game = $this->createGame();
+
+        $this->rollMany($game, 12, 10);
+
+        self::assertEquals(300, $game->score());
+    }
+
+    /**
      * @return BowlingGame
      */
     private function createGame(): BowlingGame
